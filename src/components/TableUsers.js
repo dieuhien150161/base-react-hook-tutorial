@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { fetchAllUser } from "../services/UserService";
@@ -12,8 +11,8 @@ const TableUsers = (props) => {
   const getUsers = async () => {
     let res = await fetchAllUser();
 
-    if (res && res.data && res.data.data) {
-      setListUsers(res.data.data);
+    if (res?.data) {
+      setListUsers(res.data);
     }
   };
   console.log("listUsers", listUsers);
