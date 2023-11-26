@@ -23,7 +23,7 @@ const ModalEditUser = (props) => {
     if (show) {
       setName(dataUserEdit.first_name);
     }
-  }, [dataUserEdit]);
+  }, [dataUserEdit, show]);
   return (
     <>
       <Modal
