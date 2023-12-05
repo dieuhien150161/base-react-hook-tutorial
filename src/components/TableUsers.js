@@ -164,7 +164,7 @@ const TableUsers = (props) => {
                 setListUsers(result);
               }
             } else {
-              toast.error("Wrong format for CSV file1");
+              toast.error("Wrong format for CSV file");
             }
           } else {
             toast.error("Not fount data on CSV file");
@@ -181,7 +181,7 @@ const TableUsers = (props) => {
         <span>List Uses:</span>
         <div className="group-btns">
           <label htmlFor="test" className="btn btn-warning">
-            <i class="fa-solid fa-file-import"></i>Import
+            <i className="fa-solid fa-file-import"></i>Import
           </label>
           <input
             id="test"
@@ -196,7 +196,7 @@ const TableUsers = (props) => {
             asyncOnClick={true}
             onClick={getUsersExport}
           >
-            <i class="fa-solid fa-download"> </i>
+            <i className="fa-solid fa-download"> </i>
             Export
           </CSVLink>
           {/* <CSVDownload data={csvData} target="_blank" /> */}
@@ -204,7 +204,7 @@ const TableUsers = (props) => {
             className="btn btn-success"
             onClick={() => setIsShowModalAddNew(true)}
           >
-            <i class="fa-solid fa-circle-plus"></i>
+            <i className="fa-solid fa-circle-plus"></i>
             Add new
           </button>
         </div>
