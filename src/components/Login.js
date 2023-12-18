@@ -1,10 +1,12 @@
-import { useState, React, useEffect } from "react";
+import { useState, React, useEffect, useContext } from "react";
 import { loginApi } from "../services/UserService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { loginContext } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +28,8 @@ const Login = () => {
     // eve.holt@reqres.in
     let res = await loginApi(email, password);
     if (res?.token) {
-      localStorage.setItem("token", res.token);
+      // localStorage.setItem("token", res.token);
+      loginContext(email, res.token);
       navigate("/");
     } else {
       if (res?.status === 400) {
@@ -34,6 +37,10 @@ const Login = () => {
       }
     }
     setIsLoading(false);
+  };
+
+  const handleRollback = () => {
+    navigate("/");
   };
 
   return (
@@ -66,7 +73,8 @@ const Login = () => {
         {isLoading && <i class="fas fa-spinner fa-spin"></i>} &nbsp; Login
       </button>
       <div className="back">
-        <i className="fa-solid fa-backward"></i> Go back
+        <i className="fa-solid fa-backward"></i>{" "}
+        <span onClick={() => handleRollback()}>Go back</span>
       </div>
     </div>
   );
