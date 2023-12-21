@@ -26,7 +26,7 @@ const Login = () => {
     }
     setIsLoading(true);
     // eve.holt@reqres.in
-    let res = await loginApi(email, password);
+    let res = await loginApi(email.trim(), password);
     if (res?.token) {
       // localStorage.setItem("token", res.token);
       loginContext(email, res.token);
@@ -41,6 +41,12 @@ const Login = () => {
 
   const handleRollback = () => {
     navigate("/");
+  };
+
+  const handlePressEnter = (event) => {
+    if (event?.key === "Enter") {
+      handleLogin();
+    }
   };
 
   return (
@@ -59,6 +65,7 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
+          onKeyDown={(event) => handlePressEnter(event)}
         />
         <i
           className={showPassword ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}

@@ -2,23 +2,31 @@
   display: flex;
   justify-content: space-between;
 
-  i{
+  i {
     cursor: pointer;
     padding: 0 2px;
   }
 }
 
 .add-new {
+  // display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .group-btns {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    gap: 10px;
 
-    .group-btns{ 
-        display: flex;
-        gap: 10px;
-
-        i {
-            padding: 0 2px;
-        }
+    i {
+      padding: 0 2px;
     }
   }
+}
+
+.customize-table {
+  overflow-x: auto;
+}
+
+.pagination {
+  justify-content: center;
+}
