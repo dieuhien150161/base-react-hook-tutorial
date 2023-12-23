@@ -1,15 +1,15 @@
+import _, { debounce } from "lodash";
+import * as Papa from "papaparse/papaparse.min.js";
 import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { fetchAllUser } from "../services/UserService";
+import { CSVLink } from "react-csv";
 import ReactPaginate from "react-paginate";
-import ModalAddNew from "./ModalAddNew";
-import ModalEditUser from "./ModalEditUser";
-import ModalConfirm from "./ModalConfirm";
-import _, { debounce } from "lodash";
-import "./TableUser.scss";
-import { CSVDownload, CSVLink } from "react-csv";
-import * as Papa from "papaparse/papaparse.min.js";
 import { toast } from "react-toastify";
+import { fetchAllUser } from "../services/UserService";
+import ModalAddNew from "./ModalAddNew";
+import ModalConfirm from "./ModalConfirm";
+import ModalEditUser from "./ModalEditUser";
+import "./TableUser.scss";
 
 const TableUsers = (props) => {
   const [listUsers, setListUsers] = useState([]);

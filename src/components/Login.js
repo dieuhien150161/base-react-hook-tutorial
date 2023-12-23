@@ -1,17 +1,17 @@
-import { useState, React, useEffect, useContext } from "react";
-import { loginApi } from "../services/UserService";
-import { toast } from "react-toastify";
+import { React, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { toast } from "react-toastify";
+import { handleLoginRedux } from "../redux/actions/userAction";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { loginContext } = useContext(UserContext);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
+  const isLoading = useSelector((state) => state.user.isLoading);
+  const account = useSelector((state) => state.user.account);
   useEffect(() => {
     let token = localStorage.getItem("token");
     if (token) {
@@ -24,19 +24,7 @@ const Login = () => {
       toast.error("Email/Password is required!!!");
       return;
     }
-    setIsLoading(true);
-    // eve.holt@reqres.in
-    let res = await loginApi(email.trim(), password);
-    if (res?.token) {
-      // localStorage.setItem("token", res.token);
-      loginContext(email, res.token);
-      navigate("/");
-    } else {
-      if (res?.status === 400) {
-        toast.error(res.data.error);
-      }
-    }
-    setIsLoading(false);
+    dispatch(handleLoginRedux(email, password));
   };
 
   const handleRollback = () => {
@@ -49,6 +37,12 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if (account && account.auth === true) {
+      navigate("/");
+    }
+  }, [account]);
+
   return (
     <div className="login-container col-12 col-sm-4">
       <div className="title">Login</div>
@@ -58,6 +52,7 @@ const Login = () => {
         placeholder="Email or username..."
         value={email}
         onChange={(event) => setEmail(event.target.value)}
+        onKeyDown={(event) => handlePressEnter(event)}
       />
       <div className="input-2">
         <input

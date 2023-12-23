@@ -1,22 +1,28 @@
-import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import logoApp from "../assets/images/logo192.png";
+import Navbar from "react-bootstrap/Navbar";
 import { NavLink, useNavigate } from "react-router-dom";
+import logoApp from "../assets/images/logo192.png";
+import { useDispatch, useSelector } from "react-redux";
+import { handleLogoutRedux } from "../redux/actions/userAction";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserContext";
 
 const Header = (props) => {
   const navigate = useNavigate();
-  const { logout, user } = useContext(UserContext);
-  const [hideHeader, setHideHeader] = useState(false);
+  const user = useSelector((state) => state.user.account);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    logout();
-    navigate("/login");
-    toast.success("Logout Success");
+    dispatch(handleLogoutRedux());
   };
+
+  useEffect(() => {
+    if (user?.auth === false) {
+      navigate("/");
+      toast.success("Log out successfully");
+    }
+  }, [user]);
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary header">
@@ -26,6 +32,7 @@ const Header = (props) => {
           width={30}
           height={30}
           className="d-inline-block align-top"
+          alt="logo"
         />
         <span>App User</span>
       </Navbar.Brand>
